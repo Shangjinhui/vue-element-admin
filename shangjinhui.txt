@@ -1,0 +1,2 @@
+devDependencies指定项目开发所需要的模块
+dependencies字段指定了项目运行所依赖的模块

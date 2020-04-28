@@ -1,0 +1,4 @@
+页面架构从layout入手。
+
+
+vue动态添加类名 ：class = "{'aaa bbb':true}"

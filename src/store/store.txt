@@ -1,0 +1,44 @@
+-------------------------------------vuex模块化使用方式------------关键是对文件处理indexjs-----------------
+1在store/modules文件夹下建js用于管理某一模块的数据管理。里面有state,actions,mutations.然后通过
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions
+}
+方式导出（详情请看store/modules/user.js）
+然后vuex的属性getters在store/getter.js里（包含部分模块里的state里的数据）
+然后在index.js里创建仓库（利用modules和getters属性进行模块化管理，详情请看store/index.js）最终创建方式结果大致如下：
+const store = new Vuex.Store({
+  modules:{
+      app:{
+          namespaced:true,
+          state:{},
+          mutations:{},
+          actions:{}
+      },
+      ...
+  },
+  getters:{
+    sidebar: state => state.app.sidebar,
+    size: state => state.app.size,
+    device: state => state.app.device,
+    sjhnum: state => state.shangjinhui.num,
+    ...
+  }
+})
+
+export default store
+
+------------------------然后是修改store里的数据
+this.$store.dispatch('命名空间/actions里的函数名',参数数据)，
+this.$store.commit('命名空间/mutations里的函数名',参数数据)
+其中他们的第一个参数可在this.$store里找到
+-------------------------获取store里的数据可通过在computed计算属性里直接写
+...mapGetters([
+      'roles',
+      'sjhnum'
+    ])
+    只有在getters声明的才能直接这样获取。其它的可通过this.$store.state.文件名.
+    （其实this.$store.state就能拿到,也可通过this.$store.getters拿到）
+
